@@ -1,0 +1,290 @@
+1590583159964	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\HUSHEN~1\\AppData\\Local\\Temp\\rust_mozprofileXazZwv"
+1590583226036	addons.webextension.doh-rollout@mozilla.org	WARN	Loading extension 'doh-rollout@mozilla.org': Reading manifest: Invalid extension permission: networkStatus
+1590583248935	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1590583249034	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1590583249077	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1590583249142	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+[GFX1-]: Failed to connect GPU process
+console.error: "Could not write session state file " (new Error("_initWorker called too early! Please read the session file from disk first.", "resource:///modules/sessionstore/SessionFile.jsm", 375)) "_initWorkeJavaScript error: resoource://gre/modules/JSONFile.jsm, line 173: Error: Data is not ready.
+console.error: "Could not write session state file " (necute() A request was aborted, for example through a call to IDBTransaction.abort.
+JavaScript error: resource://gre/modules/JSONFile.jsm, line 173: Error: Data is not ready.
+[Parent 32352,console.error: "Could not write session state file " (new Error("_initWorker called too early! Please read the session file from disk first.", "resource:///modules/sessionstore/SessionFile.jsm", 375)) "_initWorker/<@resource:///modules/sessionstore/SessionFile.jsm:375:15\n_initWorker@resource:///modules/sessionstore/SessionFile.jsm:3JavaScript error: resource://gre/modules/NetworkGeolocationProvider.jsm, line 555: TypeError: xhr.response.location is undefined
+1590583407738	Marionette	INFO	Listening on port 60458
+1590583561982	Marionette	INFO	Stopped listening on port 60515
+ckouts/gecko/ipc/chromium/src/base/process_util_win.cc, line 166
+1590583562017	Marionette	INFO	Stopped listening on port 60638
+
+=PBrowser::Msg_ParentActivated) Channel error: cannot send/recv
+
+1590583561990	Marionette	INFO	Stopped listening on port 60637
+=PContent::Msg_UpdateSharedData) Channe
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1590583562010	Marionette	INFO	Stopped listening on port 60629
+#!!! [Parent][MessageChannel] Error: (msgtype=0x380034,name=PContent::Msg_UpdateSharedData) ChanJavaScript error: resource://gre/modules/IndexedDB.jsm, line 370: UnknownError: IDBDatabase.transaction: Can't start IndexedDB transaction during shutdown
+1590583561819	Marionette	INFO	Stopped listening on port 60643
+me=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38001C,name=PContent::Msg_RegisterChromeItem) Channel error: cannot send/recv
+
+
+###!!! [1590583561939	Marionette	INFO	Stopped listening on port 60640
+:Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+[Parent 40696, Gecko_IOThread] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc, line 166
+ error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200051,name=PBrowser::Msg_FlushTabState) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x200099,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x38012A,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x380034,name=PContent::Msg_UpdateSharedData) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x380034,name=PContent::Msg_UpdateSharedData) Channel error: cannot send/recv
+
+
+###!!! [Parent][RunMessage] Error: Channel error: cannot send/recv
+
+
+###!!! [Parent][RunMessage] Error: Channel error: cannot send/recv
+
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 2231: TypeError: subject.QueryInterface is not a function
+[PA content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting downa
+rent 4884, Gecko_IOThread] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc, line 166
+[Parent 4884, Gecko_IOThread] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc, line 166
+[Parent 4884, Gecko_IOThread] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc, line 166

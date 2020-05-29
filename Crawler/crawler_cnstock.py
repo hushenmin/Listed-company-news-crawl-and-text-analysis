@@ -12,7 +12,10 @@ from pymongo import MongoClient
 import Text_Analysis.text_mining as tm
 
 import gevent
-from gevent import monkey,pool
+from gevent import monkey, pool
+
+from Crawler.FireFoxDriver import FireFoxDrive
+
 monkey.patch_all()
 
 
@@ -32,24 +35,24 @@ class WebCrawlFromcnstock(object):
         PORT: Port number corresponding to IP address.
     '''
 
-    def __init__(self,**kwarg):
+    def __init__(self, **kwarg):
         self.ThreadsNum = kwarg['ThreadsNum']
         self.dbName = kwarg['dbName']
         self.colName = kwarg['collectionName']
         self.IP = kwarg['IP']
         self.PORT = kwarg['PORT']
-        self.Prob = .5
+        self.Prob = .10
         self.realtimeNewsURL = []
-        self.tm = tm.TextMining(IP="localhost",PORT=27017)
+        self.tm = tm.TextMining(IP="10.3.5.58", PORT=27017)
 
     def ConnDB(self):
         '''Connect mongodb.
         '''
-        Conn = MongoClient(self.IP, self.PORT) 
+        Conn = MongoClient(self.IP, self.PORT)
         db = Conn[self.dbName]
         self._collection = db.get_collection(self.colName)
 
-    def countchn(self,string):
+    def countchn(self, string):
         '''Count Chinese numbers and calculate the frequency of Chinese occurrence.
 
         # Arguments:
@@ -58,10 +61,10 @@ class WebCrawlFromcnstock(object):
         pattern = re.compile(u'[\u1100-\uFFFDh]+?')
         result = pattern.findall(string)
         chnnum = len(result)
-        possible = chnnum/len(str(string))
+        possible = chnnum / len(str(string))
         return (chnnum, possible)
 
-    def getUrlInfo(self,url): 
+    def getUrlInfo(self, url):
         '''Analyze website and extract useful information.
         '''
         respond = requests.get(url)
@@ -80,184 +83,192 @@ class WebCrawlFromcnstock(object):
             chnstatus = self.countchn(str(paragraph))
             possible = chnstatus[1]
             if possible > self.Prob:
-               article += str(paragraph)
+                article += str(paragraph)
 
         while article.find('<') != -1 and article.find('>') != -1:
-              string = article[article.find('<'):article.find('>')+1]
-              article = article.replace(string,'')
+            string = article[article.find('<'):article.find('>') + 1]
+            article = article.replace(string, '')
         while article.find('\u3000') != -1:
-              article = article.replace('\u3000','')
+            article = article.replace('\u3000', '')
 
-        article = ' '.join(re.split(' +|\n+', article)).strip() 
+        article = ' '.join(re.split(' +|\n+', article)).strip()
 
         return date, article
 
-    def GenPagesLst(self,totalPages,Range,initPageID):
+    def GenPagesLst(self, totalPages, Range, initPageID):
         '''Generate page number list using Range parameter.
         '''
         PageLst = []
         k = initPageID
-        while k+Range-1 <= totalPages:
-            PageLst.append((k,k+Range-1))
+        while k + Range - 1 <= totalPages:
+            PageLst.append((k, k + Range - 1))
             k += Range
-        if k+Range-1 < totalPages:
-            PageLst.append((k,totalPages))
+        if k + Range - 1 < totalPages:
+            PageLst.append((k, totalPages))
         return PageLst
 
-    def CrawlHistoryCompanyNews(self,startPage,endPage,url_Part_1):
+    def CrawlHistoryCompanyNews(self, startPage, endPage, url_Part_1):
         '''Crawl historical company news 
         '''
         self.ConnDB()
-        AddressLst = self.extractData(['Address'])[0]
-        if AddressLst == []:
-            urls = []
-            for pageId in range(startPage,endPage+1):
-                urls.append(url_Part_1 + str(pageId))
-            for url in urls:
-                print(url)
-                resp = requests.get(url)
-                resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding 
-                bs = BeautifulSoup(resp.text, "lxml")
-                a_list = bs.find_all('a')
-                for a in a_list:
-                    if 'href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
+        driver = FireFoxDrive().open_driver_by_url(url_Part_1)
+        for pageId in range(startPage, endPage + 1):
+            driver.find_element_by_css_selector('#j_more_btn').click()
+            # urls.append(url_Part_1 + str(pageId))
+        resp = driver.page_source.encode('utf-8')
+        # resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding
+        bs = BeautifulSoup(resp.text, "lxml")
+        a_list = bs.find_all('a')
+        for a in a_list:
+            if 'href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
                     and a['href'].find('http://company.cnstock.com/company/') != -1 \
                     and a.parent.find('span'):
+                date, article = self.getUrlInfo(a['href'])
+                print(article)
+                while article == '' and self.Prob >= .1:
+                    self.Prob -= .1
+                    date, article = self.getUrlInfo(a['href'])
+                self.Prob = .5
+                if article != '':
+                    data = {'Date': date,
+                            'Address': a['href'],
+                            'Title': a['title'],
+                            'Article': article
+                            }
+                    print(data)
+                    # self._collection.insert_one(data)
+    # else:
+    #     print('------------------------------------------------------------')
+    #     urls = []
+    #     for pageId in range(startPage,endPage+1):
+    #         urls.append(url_Part_1 + str(pageId))
+    #     for url in urls:
+    #         print(' <Re-Crawl url> ', url)
+    #         resp = requests.get(url)
+    #         resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding
+    #         bs = BeautifulSoup(resp.text, "lxml")
+    #         a_list = bs.find_all('a')
+    #         for a in a_list:
+    #             if 'href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
+    #             and a['href'].find('http://company.cnstock.com/company/') != -1 \
+    #             and a.parent.find('span'):
+    #                 if a['href'] not in AddressLst:
+    #                     date, article = self.getUrlInfo(a['href'])
+    #                     while article == '' and self.Prob >= .1:
+    #                         self.Prob -= .1
+    #                         date, article = self.getUrlInfo(a['href'])
+    #                     self.Prob =.5
+    #                     if article != '':
+    #                         data = {'Date' : date,
+    #                                 'Address' : a['href'],
+    #                                 'Title' : a['title'],
+    #                                 'Article' : article}
+    #                         self._collection.insert_one(data)
+
+
+def CrawlRealtimeCompanyNews(self, url_part_lst):
+    '''Continue crawling company news from first website page
+       every once in a while and extract the useful information,
+       including summary, key words, released date, related stock
+       codes list and main body.
+    '''
+    doc_lst = []
+    self.ConnDB()
+    self._AddressLst = self.extractData(['Address'])[0]
+    for url_Part in url_part_lst:
+        url = url_Part + str(1)
+        resp = requests.get(url)
+        resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding
+        bs = BeautifulSoup(resp.text, "lxml")
+        a_list = bs.find_all('a')
+        if len(self.realtimeNewsURL) == 0:
+            for a in a_list:
+                if ('href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
+                    and a['href'].find('http://company.cnstock.com/company/') != -1 \
+                    and a.parent.find('span')) or ('href' in a.attrs and 'target' in a.attrs \
+                                                   and 'title' in a.attrs and a['href'].find(
+                            'http://ggjd.cnstock.com/company/') != -1 \
+                                                   and a.parent.find('span')):
+                    if a['href'] not in self._AddressLst:
+                        self.realtimeNewsURL.append(a['href'])
                         date, article = self.getUrlInfo(a['href'])
                         while article == '' and self.Prob >= .1:
                             self.Prob -= .1
                             date, article = self.getUrlInfo(a['href'])
-                        self.Prob =.5
+                        self.Prob = .5
                         if article != '':
-                            data = {'Date' : date,
-                                    'Address' : a['href'],
-                                    'Title' : a['title'],
-                                    'Article' : article}
+                            data = {'Date': date,
+                                    'Address': a['href'],
+                                    'Title': a['title'],
+                                    'Article': article}
                             self._collection.insert_one(data)
+                            doc_lst.append(a['title'] + ' ' + article)
+                            print(' [' + date + '] ' + a['title'])
         else:
-            urls = []
-            for pageId in range(startPage,endPage+1):
-                urls.append(url_Part_1 + str(pageId))
-            for url in urls:
-                print(' <Re-Crawl url> ', url)
-                resp = requests.get(url)
-                resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding 
-                bs = BeautifulSoup(resp.text, "lxml")
-                a_list = bs.find_all('a')
-                for a in a_list:
-                    if 'href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
-                    and a['href'].find('http://company.cnstock.com/company/') != -1 \
-                    and a.parent.find('span'):
-                        if a['href'] not in AddressLst:
-                            date, article = self.getUrlInfo(a['href'])
-                            while article == '' and self.Prob >= .1:
-                                self.Prob -= .1
-                                date, article = self.getUrlInfo(a['href'])
-                            self.Prob =.5
-                            if article != '':
-                                data = {'Date' : date,
-                                        'Address' : a['href'],
-                                        'Title' : a['title'],
-                                        'Article' : article}
-                                self._collection.insert_one(data)
-
-    def CrawlRealtimeCompanyNews(self,url_part_lst):
-        '''Continue crawling company news from first website page 
-           every once in a while and extract the useful information, 
-           including summary, key words, released date, related stock 
-           codes list and main body.
-        '''
-        doc_lst = []
-        self.ConnDB()
-        self._AddressLst = self.extractData(['Address'])[0]
-        for url_Part in url_part_lst:
-            url = url_Part + str(1)
-            resp = requests.get(url)
-            resp.encoding = BeautifulSoup(resp.content, "lxml").original_encoding 
-            bs = BeautifulSoup(resp.text, "lxml")
-            a_list = bs.find_all('a')
-            if len(self.realtimeNewsURL) == 0:
-                for a in a_list:
-                    if ('href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
+            for a in a_list:
+                if ('href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
                     and a['href'].find('http://company.cnstock.com/company/') != -1 \
                     and a.parent.find('span')) or ('href' in a.attrs and 'target' in a.attrs \
-                    and 'title' in a.attrs and a['href'].find('http://ggjd.cnstock.com/company/') != -1 \
-                    and a.parent.find('span')):
-                        if a['href'] not in self._AddressLst:
-                            self.realtimeNewsURL.append(a['href'])
+                                                   and 'title' in a.attrs and a['href'].find(
+                            'http://ggjd.cnstock.com/company/') != -1 \
+                                                   and a.parent.find('span')):
+                    if a['href'] not in self.realtimeNewsURL and a['href'] not in self._AddressLst:
+                        self.realtimeNewsURL.append(a['href'])
+                        date, article = self.getUrlInfo(a['href'])
+                        while article == '' and self.Prob >= .1:
+                            self.Prob -= .1
                             date, article = self.getUrlInfo(a['href'])
-                            while article == '' and self.Prob >= .1:
-                                self.Prob -= .1
-                                date, article = self.getUrlInfo(a['href'])
-                            self.Prob =.5
-                            if article != '':
-                                data = {'Date' : date,
-                                        'Address' : a['href'],
-                                        'Title' : a['title'],
-                                        'Article' : article}
-                                self._collection.insert_one(data)
-                                doc_lst.append(a['title'] + ' ' + article)
-                                print(' [' + date + '] ' + a['title'])
-            else:
-                for a in a_list:
-                    if ('href' in a.attrs and 'target' in a.attrs and 'title' in a.attrs \
-                    and a['href'].find('http://company.cnstock.com/company/') != -1 \
-                    and a.parent.find('span')) or ('href' in a.attrs and 'target' in a.attrs \
-                    and 'title' in a.attrs and a['href'].find('http://ggjd.cnstock.com/company/') != -1 \
-                    and a.parent.find('span')):
-                        if a['href'] not in self.realtimeNewsURL and a['href'] not in self._AddressLst:
-                            self.realtimeNewsURL.append(a['href'])
-                            date, article = self.getUrlInfo(a['href'])
-                            while article == '' and self.Prob >= .1:
-                                self.Prob -= .1
-                                date, article = self.getUrlInfo(a['href'])
-                            self.Prob =.5
-                            if article != '':
-                                data = {'Date' : date,
-                                        'Address' : a['href'],
-                                        'Title' : a['title'],
-                                        'Article' : article}
-                                self._collection.insert_one(data)
-                                doc_lst.append(a['title'] + ' ' + article)
-                                print(' [' + date + '] ' + a['title'])
-        return doc_lst
+                        self.Prob = .5
+                        if article != '':
+                            data = {'Date': date,
+                                    'Address': a['href'],
+                                    'Title': a['title'],
+                                    'Article': article}
+                            self._collection.insert_one(data)
+                            doc_lst.append(a['title'] + ' ' + article)
+                            print(' [' + date + '] ' + a['title'])
+    return doc_lst
 
-    def extractData(self,tag_list):
-        '''Extract column data with tag in 'tag_list' to the list.
-        '''
-        data = []
-        for tag in tag_list:
-            exec(tag + " = self._collection.distinct('" + tag + "')")
-            exec("data.append(" + tag + ")")
-        return data
 
-    def coroutine_run(self,totalPages,Range,initPageID,**kwarg):
-        '''Coroutines running.
-        '''
-        jobs = []
-        page_ranges_lst = self.GenPagesLst(totalPages,Range,initPageID)
-        for page_range in page_ranges_lst:
-            jobs.append(gevent.spawn(self.CrawlHistoryCompanyNews,page_range[0],page_range[1],kwarg['url_Part_1']))
-        gevent.joinall(jobs) 
+def extractData(self, tag_list):
+    '''Extract column data with tag in 'tag_list' to the list.
+    '''
+    data = []
+    for tag in tag_list:
+        exec(tag + " = self._collection.distinct('" + tag + "')")
+        exec("data.append(" + tag + ")")
+    return data
 
-    def multi_threads_run(self,**kwarg):
-        '''Multi-threading running.
-        '''
-        page_ranges_lst = self.GenPagesLst()
-        print(' Using ' + str(self.ThreadsNum) + ' threads for collecting news ... ')
-        with futures.ThreadPoolExecutor(max_workers=self.ThreadsNum) as executor:
-            future_to_url = {executor.submit(self.CrawlHistoryCompanyNews,page_range[0],page_range[1]) : \
-                             ind for ind, page_range in enumerate(page_ranges_lst)}  
 
-    def classifyRealtimeStockNews(self):
-        '''Continue crawling and classifying news(articles/documents) every 60s. 
-        '''
-        while True:
-            print(' * start crawling news from CNSTOCK ... ')
-            doc_list = self.CrawlRealtimeCompanyNews(['http://company.cnstock.com/company/scp_gsxw/',\
-                                                    'http://ggjd.cnstock.com/gglist/search/qmtbbdj/',\
-                                                    'http://ggjd.cnstock.com/gglist/search/ggkx/']) #
-            print(' * finish crawling ... ')
-            if len(doc_list) != 0:
-                self.tm.classifyRealtimeStockNews(doc_list)
-            time.sleep(60)
+def coroutine_run(self, totalPages, Range, initPageID, **kwarg):
+    '''Coroutines running.
+    '''
+    jobs = []
+    page_ranges_lst = self.GenPagesLst(totalPages, Range, initPageID)
+    # for page_range in page_ranges_lst:
+    jobs.append(gevent.spawn(self.CrawlHistoryCompanyNews, 0, 100, kwarg['url_Part_1']))
+    gevent.joinall(jobs)
+
+
+def multi_threads_run(self, **kwarg):
+    '''Multi-threading running.
+    '''
+    page_ranges_lst = self.GenPagesLst()
+    print(' Using ' + str(self.ThreadsNum) + ' threads for collecting news ... ')
+    with futures.ThreadPoolExecutor(max_workers=self.ThreadsNum) as executor:
+        future_to_url = {executor.submit(self.CrawlHistoryCompanyNews, page_range[0], page_range[1]): \
+                             ind for ind, page_range in enumerate(page_ranges_lst)}
+
+
+def classifyRealtimeStockNews(self):
+    '''Continue crawling and classifying news(articles/documents) every 60s.
+    '''
+    while True:
+        print(' * start crawling news from CNSTOCK ... ')
+        doc_list = self.CrawlRealtimeCompanyNews(['http://company.cnstock.com/company/scp_gsxw/', \
+                                                  'http://ggjd.cnstock.com/gglist/search/qmtbbdj/', \
+                                                  'http://ggjd.cnstock.com/gglist/search/ggkx/'])  #
+        print(' * finish crawling ... ')
+        if len(doc_list) != 0:
+            self.tm.classifyRealtimeStockNews(doc_list)
+        time.sleep(60)
